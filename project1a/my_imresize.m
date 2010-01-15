@@ -34,7 +34,7 @@ function [ r ] = enforce_bounds(n, m)
 r = floor(n);
 if r < 1
   r = 1;
-elseif n >= m
+elseif r >= m
   r = r - 1;
 end
 end
