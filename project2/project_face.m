@@ -1,10 +1,9 @@
-function [ coeffs ] = project_face( avgface, eigfaces, newface )
+function coeffs = project_face(avgface, eigfaces, newface)
 [r c d] = size(eigfaces);
-c = cell(d, 1);
-corrected = newface - avgface;
+coeffs = zeros(d, 1);
+corrected = reshape(newface - avgface, r * c, 1);
 for i = 1:d
-  c{d} = corrected * eigfaces(:, :, d);
+  coeffs(i) = reshape(eigfaces(:, :, i), 1, r * c) * corrected;
 end
-acc = avgface
 end
 
