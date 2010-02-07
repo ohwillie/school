@@ -10,8 +10,8 @@
 #   1. Change "xxx" on the next line to your CSENETID (not screen name)
 #   2. Change "xxx" on the second next line to your HW2 screen name password (NOT YOUR CSENETID PASSWORD).
 ########################################################################################
-CSENETID='xxx'
-HW2PASSWORD='xxx'
+CSENETID='rob'
+HW2PASSWORD='dashdashdash'
 
 # if you don't like the idea of editing cseneetid/passwords into this file,
 # you can also set some environment variables.  (See following code for details.)

@@ -1,0 +1,121 @@
+
+200 trials done
+400 trials done
+
+| 500 trials | 20 tags | uniform distribution | BER = 0.01 | BW = 100,000 bps | Time limit = 1,000 msec. |
+
+	Precision = 		25.2% +/- 0.200% at 95%
+	Recall = 		97.7% +/- 0.293% at 95%
+
+	False negatives =	2.3% +/-0.293% at 95%
+	False positives =	292.4700000000001% +/-2.820% at 95%
+
+	Average tag set size =	78.0 +/-0.560 at 95%
+
+Average frame counts:
+	ACKFRAME	180.0
+	EPCFRAME	125.3
+	QUERYFRAME	1,094.4
+	QUERYADJFRAME	0.0
+	QUERYREPFRAME	0.0
+	RN16FRAME	186.1
+	SELECTFRAME	894.4
+	COLLISION	20.9
+	TIMEOUTS	948.1
+	COLLISIONSZ	2.0
+200 trials done
+400 trials done
+
+| 500 trials | 40 tags | uniform distribution | BER = 0.01 | BW = 100,000 bps | Time limit = 1,000 msec. |
+
+	Precision = 		29.4% +/- 0.175% at 95%
+	Recall = 		94.8% +/- 0.285% at 95%
+
+	False negatives =	5.2% +/-0.285% at 95%
+	False positives =	228.7849999999998% +/-1.697% at 95%
+
+	Average tag set size =	129.4 +/-0.672 at 95%
+
+Average frame counts:
+	ACKFRAME	279.8
+	EPCFRAME	194.2
+	QUERYFRAME	1,032.1
+	QUERYADJFRAME	0.0
+	QUERYREPFRAME	0.0
+	RN16FRAME	289.4
+	SELECTFRAME	678.4
+	COLLISION	75.6
+	TIMEOUTS	762.0
+	COLLISIONSZ	2.0
+200 trials done
+400 trials done
+
+| 500 trials | 80 tags | uniform distribution | BER = 0.01 | BW = 100,000 bps | Time limit = 1,000 msec. |
+
+	Precision = 		37.1% +/- 0.211% at 95%
+	Recall = 		84.1% +/- 0.366% at 95%
+
+	False negatives =	15.9% +/-0.366% at 95%
+	False positives =	143.05250000000004% +/-0.958% at 95%
+
+	Average tag set size =	181.7 +/-0.732 at 95%
+
+Average frame counts:
+	ACKFRAME	348.2
+	EPCFRAME	240.5
+	QUERYFRAME	1,015.9
+	QUERYADJFRAME	0.0
+	QUERYREPFRAME	0.0
+	RN16FRAME	362.3
+	SELECTFRAME	397.1
+	COLLISION	274.0
+	TIMEOUTS	500.6
+	COLLISIONSZ	2.0
+200 trials done
+400 trials done
+
+| 500 trials | 120 tags | uniform distribution | BER = 0.01 | BW = 100,000 bps | Time limit = 1,000 msec. |
+
+	Precision = 		44.4% +/- 0.278% at 95%
+	Recall = 		67.1% +/- 0.404% at 95%
+
+	False negatives =	32.9% +/-0.404% at 95%
+	False positives =	84.49999999999997% +/-0.755% at 95%
+
+	Average tag set size =	181.9 +/-0.984 at 95%
+
+Average frame counts:
+	ACKFRAME	308.6
+	EPCFRAME	211.4
+	QUERYFRAME	1,095.6
+	QUERYADJFRAME	0.0
+	QUERYREPFRAME	0.0
+	RN16FRAME	323.3
+	SELECTFRAME	209.7
+	COLLISION	582.8
+	TIMEOUTS	301.0
+	COLLISIONSZ	2.6
+200 trials done
+400 trials done
+
+| 500 trials | 160 tags | uniform distribution | BER = 0.01 | BW = 100,000 bps | Time limit = 1,000 msec. |
+
+	Precision = 		50.1% +/- 0.362% at 95%
+	Recall = 		41.8% +/- 0.521% at 95%
+
+	False negatives =	58.2% +/-0.521% at 95%
+	False positives =	41.747500000000024% +/-0.585% at 95%
+
+	Average tag set size =	133.7 +/-1.481 at 95%
+
+Average frame counts:
+	ACKFRAME	204.3
+	EPCFRAME	138.6
+	QUERYFRAME	1,231.0
+	QUERYADJFRAME	0.0
+	QUERYREPFRAME	0.0
+	RN16FRAME	218.5
+	SELECTFRAME	83.3
+	COLLISION	950.4
+	TIMEOUTS	142.7
+	COLLISIONSZ	3.0

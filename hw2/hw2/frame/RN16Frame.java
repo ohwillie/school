@@ -17,7 +17,7 @@ import frame.RFIDFrame;
 public class RN16Frame extends TtoRFrame {
 
     /** Change this to true if you want CRC's on this type of frame */
-    private static final boolean rn16FrameHasCRC = false;
+    private static final boolean rn16FrameHasCRC = true;
 
     private static final int  RN16_RN_FIELD = 0;
     private static final int  RN16_RN_WIDTH = 16;

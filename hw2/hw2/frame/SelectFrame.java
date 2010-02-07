@@ -31,7 +31,7 @@ public class SelectFrame extends RtoTFrame {
     private int maskLen;
 
     /* CSE461 - change this to true if you want CRC's on these frames */
-    private static final boolean selectFrameHasCRC = false;
+    private static final boolean selectFrameHasCRC = true;
 
     private static final int  SELECT_TARGET_FIELD = RtoT_CMD_FIELD + RtoT_CMD_WIDTH;
     private static final int  SELECT_TARGET_WIDTH = 1;

@@ -90,7 +90,7 @@ public class RFIDReader {
                             // we're hoping to get an RN16Frame back.  It might be detected as
                             // corrupted (if it carries a CRC).
                             if ( replyFrame == null ) {
-                              state = QUERYSELECTED;
+                              state = START;
                               outFrame = null;
                             }
                             else if ( replyFrame.isCorrupted()) {
