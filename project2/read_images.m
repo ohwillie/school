@@ -6,10 +6,12 @@ try
   files = dir('*.jpg');
   for i = 1:36
     C{i} = rgb2gray(double(imread(files(i).name)) / 255);
+    C{i} = C{i} / norm(C{i});
   end
   cd ../nonsmiling_cropped;
   for i = 37:72
     C{i} = rgb2gray(double(imread(files(i - 36).name)) / 255);
+    C{i} = C{i} / norm(C{i});
   end
   cd ../..;
 catch

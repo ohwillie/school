@@ -5,6 +5,6 @@ faces_std = cellfun(@(x) x - avgface, faces_rsz, 'UniformOutput', false);
 faces_flt = cellfun(@(x) x(:)', faces_std, 'UniformOutput', false);
 faces_mat = cell2mat(faces_flt);
 my_cov = cov(faces_mat);
-[u s v] = svds(my_cov);
+[u s v] = svds(my_cov, k);
 eigfaces = reshape(u * s, [m k]);
 end

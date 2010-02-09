@@ -1,4 +1,4 @@
-function [faces, m] = rsz2std(faces)
+function [faces m] = rsz2std(faces)
 len = length(faces); m = [Inf, Inf];
 for i = 1:len
   siz = size(faces{i});
@@ -6,5 +6,6 @@ for i = 1:len
 end
 for i = 1:len
   faces{i} = my_imresize(faces{i}, m(1), m(2));
+  faces{i} = faces{i} / norm(faces{i});
 end
 end
