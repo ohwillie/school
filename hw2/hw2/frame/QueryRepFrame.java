@@ -17,7 +17,7 @@ import frame.RFIDFrame;
 public class QueryRepFrame extends RtoTFrame {
 
     /* CSE461 - change this to true if you want CRC's on these frames */
-    private static final boolean queryRepFrameHasCRC = false;
+    private static final boolean queryRepFrameHasCRC = true;
 
     // size without CRC (but with CMD field)
     private static final int queryRepFrameSize = RtoT_CMD_WIDTH;

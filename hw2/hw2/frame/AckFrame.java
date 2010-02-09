@@ -18,7 +18,7 @@ import frame.RFIDFrame;
 public class AckFrame extends RtoTFrame {
 
     /* Change this to true if you want CRC's on these frames */
-    private static final boolean  ackFrameHasCRC = false;
+    private static final boolean  ackFrameHasCRC = true;
 
     private static final int  ACK_RN_FIELD = RtoT_CMD_FIELD + RtoT_CMD_WIDTH;
     private static final int  ACK_RN_WIDTH = 16;

@@ -19,7 +19,7 @@ import component.BitMemory;
 public class EPCFrame extends TtoRFrame {
 
     /* Change to true to if you want CRC's on these frames */
-    private static final boolean epcFrameHasCRC = false;
+    private static final boolean epcFrameHasCRC = true;
 
     private static final int  EPC_EPC_FIELD = 0;
     private static final int  EPC_EPC_WIDTH = RFIDTag.EPCLen;

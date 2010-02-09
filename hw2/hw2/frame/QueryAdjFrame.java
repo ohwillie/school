@@ -23,7 +23,7 @@ import frame.RFIDFrame;
 public class QueryAdjFrame extends RtoTFrame {
 
     /* Change this to true if you want CRC's on these frames */
-    private static final boolean queryAdjFrameHasCRC = false;
+    private static final boolean queryAdjFrameHasCRC = true;
 
     private static final int  QUERYADJ_UPDN_FIELD = RtoT_CMD_FIELD + RtoT_CMD_WIDTH;
     private static final int  QUERYADJ_UPDN_WIDTH = 3;

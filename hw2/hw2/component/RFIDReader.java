@@ -10,23 +10,23 @@ import java.util.*;
 
 /** <font color=red><b>[CSE461]</b></font> Implementation of the RFID Reader, which controls
     the collision resolution procedure.
-*/
+ */
 public class RFIDReader {
 
-    /** <font color=red><b>[CSE461]</b></font> As you find tag EPCs, add them to this HashSet.
-     */
-    private HashSet<BitMemory> currentInventory = new HashSet<BitMemory>();
+  /** <font color=red><b>[CSE461]</b></font> As you find tag EPCs, add them to this HashSet.
+   */
+  private HashSet<BitMemory> currentInventory = new HashSet<BitMemory>();
 
-    /** This RFIDChannel allows you to send frame to and receive frames from
+  /** This RFIDChannel allows you to send frame to and receive frames from
         the tags.
-    */
-    private RFIDChannel channel;
+   */
+  private RFIDChannel channel;
 
-    public RFIDReader(RFIDChannel chan) {
-        channel = chan;
-    }
+  public RFIDReader(RFIDChannel chan) {
+    channel = chan;
+  }
 
-    /** <font color=red><b>[CSE461]</b></font> Main loop of the simulation.
+  /** <font color=red><b>[CSE461]</b></font> Main loop of the simulation.
         This is where (most of) your code goes.  
         The goal is to inventory as many tags as you can before time expires.
         Basically, you sit in a forever loop sending frames to the tags, reading
@@ -42,95 +42,59 @@ public class RFIDReader {
         the ACK/ECP frame exchange that causes the tag to provide its EPC (assuming
         no frames are corrupted).
         <p>
-        
-    */
 
-    public void inventory() throws sim.SimDoneException {
-        // The dummy implementation:
-        //   - tries to select all the tags
-        //   - simply repeats a query with a fixed window size until
-        //     some one tag replies
-        //  - inventories and deselects the tag that replied
-        // 
-        // This is as dumb as it gets.
-        // The implementation is admirable, though -- it's a direct
-        // encoding of a state machine.   Here are the possible states.
-        // (The state diagram is given by the code...)
+   */
 
-        final int START = 0;
-        final int QUERYSELECTED = 1;
-        final int RNWAIT = 2;
-        final int EPCWAIT = 3;
+  public void inventory() throws sim.SimDoneException {
+    // Uncomment the next line to see a rather verbose trace of
+    // traffic in both directions
+    channel.setDebug(true);
 
-        int state = START;
+    RtoTFrame outFrame = null;
+    TtoRFrame replyFrame = null;
 
-        // Uncomment the next line to see a rather verbose trace of
-        // traffic in both directions
-        //channel.setDebug(true);
-
-        BitMemory mask = new BitMemory(0);
-
-        RtoTFrame outFrame = null;
-        TtoRFrame replyFrame = null;
-
-        while(true) {
-
-            switch ( state ) {
-                case START:
-                             outFrame =  new SelectFrame(1, 0, 0, 0, mask);
-                             state = QUERYSELECTED;
-                             break;
-
-                case QUERYSELECTED:
-                            outFrame = new QueryFrame(3, 0, 5);
-                            state = RNWAIT;
-                            break;
-
-                case RNWAIT:
-                            // we're hoping to get an RN16Frame back.  It might be detected as
-                            // corrupted (if it carries a CRC).
-                            if ( replyFrame == null ) {
-                              state = START;
-                              outFrame = null;
-                            }
-                            else if ( replyFrame.isCorrupted()) {
-                              state = QUERYSELECTED;
-                              outFrame = null;
-                            }
-                            else {
-                              int rn = RN16Frame.getRN(replyFrame);
-                              outFrame = new AckFrame(rn);
-                              state = EPCWAIT;
-                            }
-                            break;
-
-                case EPCWAIT:
-                    // We're hoping for an EPCFrame back.
-                    if ( replyFrame != null && !replyFrame.isCorrupted() ) {
-                      currentInventory.add( EPCFrame.getEPC(replyFrame) );
-                      state = QUERYSELECTED;
-                    } else {
-                      state = QUERYSELECTED;
-                    }
-                    outFrame = null;
-                    break;
-            }
-
-            // channel.sendFrame() will cause the frame to be 
-            // delivered to each tag.  The frame is randomly
-            // corrupted according to the BER, independently
-            // for each tag.
-            // The returned value, a frame, is also corrupted,
-            // both by the BER and by collisions.
-            if ( outFrame != null ) replyFrame = channel.sendFrame( outFrame );
-            else                    replyFrame = null;
+    // NOTE modifying C to a different value could be one of our possible
+    // iterative algorithm tweaks; keep this in mind.
+    final double C = 0.3;
+    double Qfp = 4.0;
+    
+    // NOTE using QueryReps to reduce randomness in inventorying
+    // boolean useQueryRep = false;
+    
+    while (true) {
+      int Q = (int) Math.round(Qfp);
+      
+      // if (useQueryRep) {
+      outFrame = new QueryFrame(0, 0, Q);
+      // } else {
+      //   outFrame = new QueryRepFrame();
+      // }
+      replyFrame = channel.sendFrame(outFrame);
+      
+      if (replyFrame == null) {
+        Qfp = Math.max(0, Qfp - C);
+      } else if (replyFrame.isCollision()) {
+        Qfp = Math.min(15, Qfp + C);
+        // useQueryRep = false;
+      } else if (!replyFrame.isCorrupted()) {
+        int rn16 = RN16Frame.getRN(replyFrame);
+        outFrame = new AckFrame(rn16);
+        replyFrame = channel.sendFrame(outFrame);
+        if (replyFrame != null && !replyFrame.isCorrupted()) {
+          BitMemory epc = EPCFrame.getEPC(replyFrame);
+          currentInventory.add(epc);
+          outFrame = new SelectFrame(0, 5, 0, RFIDTag.EPCLen, epc);
+          channel.sendFrame(outFrame);
         }
+        // useQueryRep = true;
+      }
     }
+  }
 
-    /** Retrieves the set of EPCs that the reader thinks 
+  /** Retrieves the set of EPCs that the reader thinks 
         it has discovered so far.
-    */
-    public HashSet<BitMemory> getInventory() {
-        return currentInventory;
-    }
+   */
+  public HashSet<BitMemory> getInventory() {
+    return currentInventory;
+  }
 }
