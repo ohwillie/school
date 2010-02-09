@@ -48,45 +48,47 @@ public class RFIDReader {
   public void inventory() throws sim.SimDoneException {
     // Uncomment the next line to see a rather verbose trace of
     // traffic in both directions
-    channel.setDebug(true);
+    // channel.setDebug(true);
 
     RtoTFrame outFrame = null;
     TtoRFrame replyFrame = null;
-
+    
     // NOTE modifying C to a different value could be one of our possible
     // iterative algorithm tweaks; keep this in mind.
     final double C = 0.3;
     double Qfp = 4.0;
     
-    // NOTE using QueryReps to reduce randomness in inventorying
-    // boolean useQueryRep = false;
-    
     while (true) {
       int Q = (int) Math.round(Qfp);
       
-      // if (useQueryRep) {
       outFrame = new QueryFrame(0, 0, Q);
-      // } else {
-      //   outFrame = new QueryRepFrame();
-      // }
       replyFrame = channel.sendFrame(outFrame);
       
       if (replyFrame == null) {
         Qfp = Math.max(0, Qfp - C);
       } else if (replyFrame.isCollision()) {
         Qfp = Math.min(15, Qfp + C);
-        // useQueryRep = false;
-      } else if (!replyFrame.isCorrupted()) {
-        int rn16 = RN16Frame.getRN(replyFrame);
-        outFrame = new AckFrame(rn16);
-        replyFrame = channel.sendFrame(outFrame);
-        if (replyFrame != null && !replyFrame.isCorrupted()) {
-          BitMemory epc = EPCFrame.getEPC(replyFrame);
-          currentInventory.add(epc);
-          outFrame = new SelectFrame(0, 5, 0, RFIDTag.EPCLen, epc);
-          channel.sendFrame(outFrame);
+      } else {
+        int retries = 0;
+        while (replyFrame == null || (!replyFrame.isCollision() && replyFrame.isCorrupted())) {
+          if (retries++ > 5 || (replyFrame == null && retries > 1)) {
+            break;
+          }
+          outFrame = new QueryAdjFrame(1);
+          replyFrame = channel.sendFrame(outFrame);
         }
-        // useQueryRep = true;
+        
+        if (replyFrame != null && !replyFrame.isCorrupted()) {
+          int rn16 = RN16Frame.getRN(replyFrame);
+          outFrame = new AckFrame(rn16);
+          replyFrame = channel.sendFrame(outFrame);
+          if (replyFrame != null && !replyFrame.isCorrupted()) {
+            BitMemory epc = EPCFrame.getEPC(replyFrame);
+            currentInventory.add(epc);
+            outFrame = new SelectFrame(0, 5, 0, RFIDTag.EPCLen, epc);
+            channel.sendFrame(outFrame);
+          }
+        }
       }
     }
   }

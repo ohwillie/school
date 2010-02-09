@@ -29,7 +29,7 @@ public class QueryFrame extends RtoTFrame {
 
     /* CSE461 - Change this to true if you want CRC's for Query frames.
     */
-    private static final boolean queryFrameHasCRC = true;
+    private static final boolean queryFrameHasCRC = false;
 
     private static final int  QUERY_SEL_FIELD = RtoT_CMD_FIELD + RtoT_CMD_WIDTH;
     private static final int  QUERY_SEL_WIDTH = 2;
